@@ -1,6 +1,6 @@
-import {component} from './core/component'
+import {component} from '../core/component'
 import {TodoItem} from './TodoItem'
-import {store} from './store'
+import {store} from '../store'
 
 export const TodoList = component({
   template () {

@@ -1,6 +1,6 @@
 import {component} from './core/component'
-import {TodoList} from './TodoList'
-import {Sketchbook} from './Sketchbook'
+import {TodoList} from './basic/TodoList'
+import {Sketchbook} from './sketchbook/Sketchbook'
 
 export const createApp = component({
   template () {

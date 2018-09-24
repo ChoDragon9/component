@@ -1,4 +1,4 @@
-import {component} from './core/component'
+import {component} from '../core/component'
 import {Circle} from './Circle'
 import {Icon} from './Icon'
 import {Polygon} from './Polygon'
