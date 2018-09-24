@@ -34,6 +34,6 @@ export const TodoItem = component({
     ]
   },
   beforeCreate ({render}) {
-    store.subscribe('todo', render)
+    store.watch('todo', render)
   }
 })

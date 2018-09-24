@@ -5,7 +5,7 @@ export const createStore = () => {
   return {
     set: mutation({store, subscriber}),
     get: getter({store}),
-    subscribe: watch({subscriber})
+    watch: watch({subscriber})
   }
 }
 

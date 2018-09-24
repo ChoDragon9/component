@@ -1,4 +1,5 @@
 import {component} from '../core/component'
+import {store} from './store'
 import {Line} from './Line'
 import {Circle} from './Circle'
 import {Polygon} from './Polygon'
@@ -6,12 +7,7 @@ import {Polygon} from './Polygon'
 export const Sketchbook = component({
   data () {
     return {
-      coordinate: [
-        [100, 100],
-        [100, 400],
-        [400, 400],
-        [400, 100]
-      ]
+      coordinate: store.get('coordinate')
     }
   },
   template () {
@@ -31,5 +27,13 @@ export const Sketchbook = component({
       ['circle', Circle],
       ['polygon', Polygon]
     ]
+  },
+  beforeCreate ({render}) {
+    store.watch('coordinate', render)
+  },
+  methods ({dom}) {
+    setTimeout(() => {
+      store.set('svgOffset', dom.getBoundingClientRect())
+    })
   }
 })

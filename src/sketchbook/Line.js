@@ -1,4 +1,5 @@
 import {component} from '../core/component'
+import {store} from './store'
 
 export const Line = component({
   data () {
@@ -19,5 +20,23 @@ export const Line = component({
     }
 
     return `<g>${html}</g>`
+  },
+  events () {
+    return [
+      ['line', 'onclick', 'addPoint']
+    ]
+  },
+  methods () {
+    return {
+      addPoint (event) {
+        event.preventDefault()
+        console.log(this)
+        const {pageX, pageY} = event
+        const {left, top} = store.get('svgOffset')
+        const coordinate = store.get('coordinate')
+        coordinate.push([pageX - left, pageY - top])
+        store.set('coordinate', coordinate)
+      }
+    }
   }
 })
