@@ -1,4 +1,5 @@
 import {component} from '../core/component'
+import {store} from "./store";
 
 export const Circle = component({
   data () {
@@ -14,5 +15,22 @@ export const Circle = component({
     }, '')
 
     return `<g>${html}</g>`
+  },
+  events () {
+    return [
+      ['line', 'onmousedown', 'onMouseDown'],
+      ['line', 'onmouseup', 'onMouseUp'],
+      ['line', 'onmouseleave', 'onMouseLeave']
+    ]
+  },
+  methods () {
+    return {
+      onMouseDown () { console.log('onMouseDown') },
+      onMouseUp () { console.log('onMouseUp') },
+      onMouseLeave () { console.log('onMouseLeave') }
+    }
+  },
+  beforeCreate ({render}) {
+    store.watch('coordinate', render)
   }
 })

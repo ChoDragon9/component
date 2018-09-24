@@ -38,5 +38,8 @@ export const Line = component({
         store.set('coordinate', coordinate)
       }
     }
+  },
+  beforeCreate ({render}) {
+    store.watch('coordinate', render)
   }
 })

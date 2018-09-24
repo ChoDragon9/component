@@ -28,9 +28,6 @@ export const Sketchbook = component({
       ['polygon', Polygon]
     ]
   },
-  beforeCreate ({render}) {
-    store.watch('coordinate', render)
-  },
   methods ({dom}) {
     setTimeout(() => {
       store.set('svgOffset', dom.getBoundingClientRect())
