@@ -1,28 +1,30 @@
 const noop = () => {}
 const always = v => _ => v
 
-export const component = (options) => () => {
+export const component = (options) => (props = always({})) => {
   const { beforeCreate = noop } = options
   const render = create(options)
-  let dom = render()
-  beforeCreate({render: replaceWith(dom, render)})
+  let dom = render(props)
+  beforeCreate({render: replaceWith({dom, render, props})})
   return dom
 }
 
 const create = ({
-                  template = noop,
-                  components = always([]),
-                  methods = always([]),
-                  events = always([])
-                }) => () => {
-  const dom = parseHTML(template())
-  bindEvent(events(), methods({dom}), dom)
-  bindComponent(components(), dom)
+    data = always({}),
+    template = noop,
+    components = always([]),
+    methods = always([]),
+    events = always([])
+  }) => props => {
+  const state = data()
+  const dom = parseHTML(template({data: state, props}))
+  bindEvent(events(), methods({dom, data: state, props}), dom)
+  bindComponent(components(), dom, state)
   return dom
 }
 
-const replaceWith = (dom, render) => () => {
-  const newDom = render()
+const replaceWith = ({dom, render, props}) => () => {
+  const newDom = render(props)
   dom.replaceWith(newDom)
   dom = newDom
 }
@@ -41,14 +43,25 @@ export const bindEvent = (events, methods, dom) => {
   }
 }
 
-export const bindComponent = (components, dom) => {
+export const bindComponent = (components, dom, state) => {
   for (const [selector, component] of components) {
     getElem(selector, dom).forEach(elem => {
-      replaceWith(elem, component)()
+      replaceWith({
+        dom: elem,
+        render: component,
+        props: getProps(elem, state)
+      })()
     })
   }
+}
+
+const getProps = (elem, state) => {
+  const attr = getAttr(elem, 'props')
+  return attr ? state[attr] : {}
 }
 
 export const getElem = (selector, parent = document) => {
   return parent.querySelectorAll(selector)
 }
+
+const getAttr = (elem, attr) => elem.getAttribute(attr)
