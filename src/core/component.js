@@ -17,7 +17,7 @@ const create = ({
     events = always([])
   }) => props => {
   const state = data()
-  const dom = parseHTML(template({data: state, props}))
+  const dom = parseDOM(template({data: state, props}))
   bindEvent(events(), methods({dom, data: state, props}), dom)
   bindComponent(components(), dom, state)
   return dom
@@ -29,10 +29,10 @@ const replaceWith = ({dom, render, props}) => () => {
   dom = newDom
 }
 
-export const parseHTML = (template) => {
-  var tmp = document.implementation.createHTMLDocument()
-  tmp.body.innerHTML = template
-  return tmp.body.children[0]
+export const parseDOM = (template) => {
+  var tmp = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  tmp.innerHTML = template
+  return tmp.children[0]
 }
 
 export const bindEvent = (events, methods, dom) => {
