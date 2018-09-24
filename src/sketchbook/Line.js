@@ -16,7 +16,7 @@ export const Line = component({
       const [x2, y2] = props[endIndex]
 
       html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" 
-              stroke-width="${data.strokeWidth}" stroke="${data.stroke}"></line>`
+              stroke-width="${data.strokeWidth}" stroke="${data.stroke}" data-index="${i}"></line>`
     }
 
     return `<g>${html}</g>`
@@ -30,11 +30,11 @@ export const Line = component({
     return {
       addPoint (event) {
         event.preventDefault()
-        console.log(this)
-        const {pageX, pageY} = event
+        const {pageX, pageY, target} = event
+        const index = parseInt(target.getAttribute('data-index'))
         const {left, top} = store.get('svgOffset')
         const coordinate = store.get('coordinate')
-        coordinate.push([pageX - left, pageY - top])
+        coordinate.splice(index + 1, 0, [pageX - left, pageY - top])
         store.set('coordinate', coordinate)
       }
     }
