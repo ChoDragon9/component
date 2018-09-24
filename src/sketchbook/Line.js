@@ -4,7 +4,7 @@ export const Line = component({
   data () {
     return {
       strokeWidth: 5,
-      stroke: '#ff6633'
+      stroke: 'rgba(255, 102, 51)'
     }
   },
   template ({props, data}) {

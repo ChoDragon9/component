@@ -4,7 +4,7 @@ export const Circle = component({
   data () {
     return {
       radius: 10,
-      fill: '#ff6633'
+      fill: 'rgba(255, 102, 51)'
     }
   },
   template ({props, data: {radius, fill}}) {

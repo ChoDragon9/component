@@ -1,6 +1,7 @@
 import {component} from '../core/component'
 import {Line} from './Line'
 import {Circle} from './Circle'
+import {Polygon} from './Polygon'
 
 export const Sketchbook = component({
   data () {
@@ -19,6 +20,7 @@ export const Sketchbook = component({
            height="500"
            xmlns="http://www.w3.org/2000/svg" 
            xmlns:xlink="http://www.w3.org/1999/xlink">
+        <polygon props="coordinate"></polygon>
         <line props="coordinate"></line>
         <circle props="coordinate"></circle>
       </svg>
@@ -27,7 +29,8 @@ export const Sketchbook = component({
   components () {
     return [
       ['line', Line],
-      ['circle', Circle]
+      ['circle', Circle],
+      ['polygon', Polygon]
     ]
   }
 })
