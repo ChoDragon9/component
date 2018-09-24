@@ -8,12 +8,13 @@ export const Line = component({
       stroke: 'rgba(255, 102, 51)'
     }
   },
-  template ({props, data}) {
+  template ({data}) {
+    const coordinate = store.get('coordinate')
     let html = ''
-    for (let i = 0, len = props.length; i < len; i++) {
+    for (let i = 0, len = coordinate.length; i < len; i++) {
       const endIndex = i === len - 1 ? 0 : i + 1
-      const [x1, y1] = props[i]
-      const [x2, y2] = props[endIndex]
+      const [x1, y1] = coordinate[i]
+      const [x2, y2] = coordinate[endIndex]
 
       html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" 
               stroke-width="${data.strokeWidth}" stroke="${data.stroke}" data-index="${i}"></line>`

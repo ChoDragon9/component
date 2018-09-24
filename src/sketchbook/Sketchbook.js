@@ -6,20 +6,15 @@ import {Circle} from './Circle'
 import {Polygon} from './Polygon'
 
 export const Sketchbook = component({
-  data () {
-    return {
-      coordinate: store.get('coordinate')
-    }
-  },
   template () {
     return `
       <div>
         <svg width="500"
              height="500"
              xmlns="http://www.w3.org/2000/svg">
-          <polygon props="coordinate"></polygon>
-          <line props="coordinate"></line>
-          <circle props="coordinate"></circle>
+          <polygon></polygon>
+          <line></line>
+          <circle></circle>
         </svg>
       </div>
     `
@@ -58,14 +53,14 @@ export const Sketchbook = component({
               prevCoord = mousePosition
             } else {
               const [movedX, movedY] = [
-                prevCoord[0] - mousePosition[0],
-                prevCoord[1] - mousePosition[1]
+                mousePosition[0] - prevCoord[0],
+                mousePosition[1] - prevCoord[1]
               ]
-              coordinate.map(([x, y]) => {
-                console.log([x + movedX, y + movedY])
+              const newCoord = coordinate.map(([x, y]) => {
                 return [x + movedX, y + movedY]
               })
-              store.set('coordinate', )
+              store.set('coordinate', newCoord)
+              prevCoord = mousePosition
             }
           } else {
             prevCoord = null
