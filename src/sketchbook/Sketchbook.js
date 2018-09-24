@@ -28,9 +28,21 @@ export const Sketchbook = component({
       ['polygon', Polygon]
     ]
   },
+  events () {
+    return [
+      ['svg', 'onmousemove', 'onMouseMove']
+    ]
+  },
   methods ({dom}) {
     setTimeout(() => {
       store.set('svgOffset', dom.getBoundingClientRect())
     })
+
+    return {
+      onMouseMove () {
+        const selectedPoint = store.get('selectedPoint')
+        console.log(selectedPoint)
+      }
+    }
   }
 })

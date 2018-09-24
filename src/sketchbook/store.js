@@ -7,7 +7,9 @@ const state = {
     [100, 400],
     [400, 400],
     [400, 100]
-  ]
+  ],
+  selectedPoint: null
 }
 
 store.set('coordinate', state.coordinate)
+store.set('selectedPoint', state.selectedPoint)

@@ -9,8 +9,8 @@ export const Circle = component({
     }
   },
   template ({props, data: {radius, fill}}) {
-    const html = props.reduce((html, [x, y]) => {
-      html += `<circle cx="${x}" cy="${y}" r="${radius}" fill="${fill}"></circle>`
+    const html = props.reduce((html, [x, y], index) => {
+      html += `<circle cx="${x}" cy="${y}" r="${radius}" fill="${fill}" data-index="${index}"></circle>`
       return html
     }, '')
 
@@ -18,16 +18,23 @@ export const Circle = component({
   },
   events () {
     return [
-      ['line', 'onmousedown', 'onMouseDown'],
-      ['line', 'onmouseup', 'onMouseUp'],
-      ['line', 'onmouseleave', 'onMouseLeave']
+      ['circle', 'onmousedown', 'onMouseDown'],
+      ['circle', 'onmouseup', 'onMouseUp'],
+      ['circle', 'onmouseleave', 'onMouseLeave']
     ]
   },
   methods () {
+    const getIndex = elem => parseInt(elem.getAttribute('data-index'))
     return {
-      onMouseDown () { console.log('onMouseDown') },
-      onMouseUp () { console.log('onMouseUp') },
-      onMouseLeave () { console.log('onMouseLeave') }
+      onMouseDown (event) {
+        store.set('selectedPoint', getIndex(event.target))
+      },
+      onMouseUp () {
+        store.set('selectedPoint', null)
+      },
+      onMouseLeave () {
+        store.set('selectedPoint', null)
+      }
     }
   },
   beforeCreate ({render}) {
