@@ -1,8 +1,7 @@
-const noop = () => {}
-const always = v => _ => v
+import * as _ from './fp'
 
-export const component = (options) => (props = always({})) => {
-  const { beforeCreate = noop } = options
+export const component = (options) => (props = _.always({})) => {
+  const { beforeCreate = _.noop } = options
   const render = create(options)
   let dom = render(props)
   beforeCreate({render: replaceWith({dom, render, props})})
@@ -10,11 +9,11 @@ export const component = (options) => (props = always({})) => {
 }
 
 const create = ({
-    data = always({}),
-    template = noop,
-    components = always([]),
-    methods = always([]),
-    events = always([])
+    data = _.always({}),
+    template = _.noop,
+    components = _.always([]),
+    methods = _.always([]),
+    events = _.always([])
   }) => props => {
   const state = data()
   const dom = parseDOM(template({data: state, props}))

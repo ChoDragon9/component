@@ -14,5 +14,22 @@ export const Polygon = component({
   },
   beforeCreate ({render}) {
     store.watch('coordinate', render)
+  },
+  events () {
+    return [
+      ['polygon', 'onmousedown', 'select'],
+      ['polygon', 'onmouseup', 'unselect'],
+      ['polygon', 'onmouseleave', 'unselect']
+    ]
+  },
+  methods () {
+    return {
+      select () {
+        store.set('selectedPolygon', true)
+      },
+      unselect () {
+        store.set('selectedPolygon', false)
+      }
+    }
   }
 })

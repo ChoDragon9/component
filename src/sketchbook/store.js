@@ -8,8 +8,10 @@ const state = {
     [400, 400],
     [400, 100]
   ],
-  selectedPoint: null
+  selectedPoint: null,
+  selectedPolygon: false
 }
 
 store.set('coordinate', state.coordinate)
 store.set('selectedPoint', state.selectedPoint)
+store.set('selectedPolygon', state.selectedPolygon)

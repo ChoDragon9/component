@@ -18,21 +18,18 @@ export const Circle = component({
   },
   events () {
     return [
-      ['circle', 'onmousedown', 'onMouseDown'],
-      ['circle', 'onmouseup', 'onMouseUp'],
-      ['circle', 'onmouseleave', 'onMouseLeave']
+      ['circle', 'onmousedown', 'select'],
+      ['circle', 'onmouseup', 'unselect'],
+      ['circle', 'onmouseleave', 'unselect']
     ]
   },
   methods () {
     const getIndex = elem => parseInt(elem.getAttribute('data-index'))
     return {
-      onMouseDown (event) {
+      select (event) {
         store.set('selectedPoint', getIndex(event.target))
       },
-      onMouseUp () {
-        store.set('selectedPoint', null)
-      },
-      onMouseLeave () {
+      unselect () {
         store.set('selectedPoint', null)
       }
     }
