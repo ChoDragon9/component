@@ -1,4 +1,4 @@
-import {createStore} from './core/store'
+import {createStore} from '../core/store'
 
 export const store = createStore()
 const state = {
