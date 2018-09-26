@@ -48,10 +48,9 @@ export const addCoordinate = () => {
     [400, 100]
   ]
 
-  coordinates.push(newKey)
-  console.log(coordinates)
-  store.set('coordinates', coordinates)
   store.set(newKey, val)
+  coordinates.push(newKey)
+  store.set('coordinates', coordinates)
 }
 
 const rand = () => {
