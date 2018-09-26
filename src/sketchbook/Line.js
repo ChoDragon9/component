@@ -8,8 +8,8 @@ export const Line = component({
       stroke: 'rgba(255, 102, 51)'
     }
   },
-  template ({data}) {
-    const coordinate = store.get('coordinate')
+  template ({data, props}) {
+    const coordinate = store.get(props)
     let html = ''
     for (let i = 0, len = coordinate.length; i < len; i++) {
       const endIndex = i === len - 1 ? 0 : i + 1
@@ -27,20 +27,20 @@ export const Line = component({
       ['line', 'onclick', 'addPoint']
     ]
   },
-  methods () {
+  methods ({props}) {
     return {
       addPoint (event) {
         event.preventDefault()
         const {pageX, pageY, target} = event
         const index = parseInt(target.getAttribute('data-index'))
         const {left, top} = store.get('svgOffset')
-        const coordinate = store.get('coordinate')
+        const coordinate = store.get(props)
         coordinate.splice(index + 1, 0, [pageX - left, pageY - top])
-        store.set('coordinate', coordinate)
+        store.set(props, coordinate)
       }
     }
   },
-  beforeCreate ({render}) {
-    store.watch('coordinate', render)
+  beforeCreate ({render, props}) {
+    store.watch(props, render)
   }
 })

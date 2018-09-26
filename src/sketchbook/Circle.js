@@ -8,8 +8,8 @@ export const Circle = component({
       fill: 'rgba(255, 102, 51)'
     }
   },
-  template ({data: {radius, fill}}) {
-    const coordinate = store.get('coordinate')
+  template ({data: {radius, fill}, props}) {
+    const coordinate = store.get(props)
     const html = coordinate.reduce((html, [x, y], index) => {
       html += `<circle cx="${x}" cy="${y}" r="${radius}" fill="${fill}" data-index="${index}"></circle>`
       return html
@@ -24,18 +24,24 @@ export const Circle = component({
       ['circle', 'onmouseleave', 'unselect']
     ]
   },
-  methods () {
+  methods ({props}) {
     const getIndex = elem => parseInt(elem.getAttribute('data-index'))
     return {
       select (event) {
-        store.set('selectedPoint', getIndex(event.target))
+        store.set('selectedPoint', {
+          index: getIndex(event.target),
+          key: props
+        })
       },
       unselect () {
-        store.set('selectedPoint', null)
+        store.set('selectedPoint', {
+          index: null,
+          key: null
+        })
       }
     }
   },
-  beforeCreate ({render}) {
-    store.watch('coordinate', render)
+  beforeCreate ({render, props}) {
+    store.watch(props, render)
   }
 })

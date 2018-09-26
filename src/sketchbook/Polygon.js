@@ -7,14 +7,14 @@ export const Polygon = component({
       fill: 'rgba(255, 102, 51, .5)'
     }
   },
-  template ({data: {fill}}) {
-    const coordinate = store.get('coordinate')
+  template ({data: {fill}, props}) {
+    const coordinate = store.get(props)
     const points = coordinate.map(v => v.join(',')).join(' ')
     const html = `<polygon points="${points}" fill="${fill}"></polygon>`
     return `<g>${html}</g>`
   },
-  beforeCreate ({render}) {
-    store.watch('coordinate', render)
+  beforeCreate ({render, props}) {
+    store.watch(props, render)
   },
   events () {
     return [
@@ -23,13 +23,13 @@ export const Polygon = component({
       ['polygon', 'onmouseleave', 'unselect']
     ]
   },
-  methods () {
+  methods ({props}) {
     return {
       select () {
-        store.set('selectedPolygon', true)
+        store.set('selectedPolygon', { key: props })
       },
       unselect () {
-        store.set('selectedPolygon', false)
+        store.set('selectedPolygon', { key: null })
         store.set('prevCoordinate', null)
       }
     }

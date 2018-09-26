@@ -1,21 +1,26 @@
 import {store} from './store'
 import {component} from '../core/component'
-import {changeCoordinate} from './mutation'
+import {changeCoordinate, addCoordinate} from './mutation'
 import {Line} from './Line'
 import {Circle} from './Circle'
 import {Polygon} from './Polygon'
 
 export const Sketchbook = component({
   template () {
+    const coordinates = store.get('coordinates')
+    const html = coordinates.map(key => {
+      return `<polygon props="${key}"></polygon>
+      <line props="${key}"></line>
+      <circle props="${key}"></circle>`
+    })
     return `
       <div>
         <svg width="500"
              height="500"
              xmlns="http://www.w3.org/2000/svg">
-          <polygon></polygon>
-          <line></line>
-          <circle></circle>
+          ${html}
         </svg>
+        <input type="button" value="Add">
       </div>
     `
   },
@@ -28,7 +33,8 @@ export const Sketchbook = component({
   },
   events () {
     return [
-      ['svg', 'onmousemove', 'onMouseMove']
+      ['svg', 'onmousemove', 'onMouseMove'],
+      ['input[type="button"]', 'onclick', 'onClick']
     ]
   },
   methods ({dom}) {
@@ -39,7 +45,13 @@ export const Sketchbook = component({
       onMouseMove (event) {
         const {pageX, pageY} = event
         changeCoordinate ({pageX, pageY})
+      },
+      onClick () {
+        addCoordinate()
       }
     }
+  },
+  beforeCreate ({render}) {
+    store.watch('coordinates', render)
   }
 })

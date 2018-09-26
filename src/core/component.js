@@ -4,7 +4,10 @@ export const component = (options) => (props = _.always({})) => {
   const { beforeCreate = _.noop } = options
   const render = create(options)
   let dom = render(props)
-  beforeCreate({render: replaceWith({dom, render, props})})
+  beforeCreate({
+    render: replaceWith({dom, render, props}),
+    props
+  })
   return dom
 }
 
@@ -56,7 +59,15 @@ export const bindComponent = (components, dom, state) => {
 
 const getProps = (elem, state) => {
   const attr = getAttr(elem, 'props')
-  return attr ? state[attr] : {}
+  if (attr) {
+    if (state[attr]) {
+      return state[attr]
+    } else {
+      return attr
+    }
+  } else {
+    return {}
+  }
 }
 
 export const getElem = (selector, parent = document) => {
