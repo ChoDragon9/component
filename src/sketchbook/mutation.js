@@ -37,22 +37,3 @@ export const changePolygon = ({x, y}) => {
     store.set('prevCoordinate', [x, y])
   }
 }
-
-export const addCoordinate = () => {
-  const newKey = `coordinate${rand()}`
-  const coordinates = store.get('coordinates')
-  const val = [
-    [100, 100],
-    [100, 400],
-    [400, 400],
-    [400, 100]
-  ]
-
-  store.set(newKey, val)
-  coordinates.push(newKey)
-  store.set('coordinates', coordinates)
-}
-
-const rand = () => {
-  return parseInt(Math.random() * 1000000)
-}
