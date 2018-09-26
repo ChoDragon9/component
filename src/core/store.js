@@ -1,12 +1,19 @@
-export const createStore = () => {
+export const createStore = (state = {}) => {
   const store = new Map()
   const subscriber = new Map()
+  const set = mutation({store, subscriber})
+
+  setDefaultState({state, set})
 
   return {
-    set: mutation({store, subscriber}),
+    set,
     get: getter({store}),
     watch: watch({subscriber})
   }
+}
+
+const setDefaultState = ({state, set}) => {
+  Object.entries(state).forEach(([key, value]) => set(key, value))
 }
 
 const mutation = ({store, subscriber}) => (key, value) => {

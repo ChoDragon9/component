@@ -30,6 +30,7 @@ export const Polygon = component({
       },
       unselect () {
         store.set('selectedPolygon', false)
+        store.set('prevCoordinate', null)
       }
     }
   }

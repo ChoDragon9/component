@@ -1,6 +1,5 @@
 import {createStore} from '../core/store'
 
-export const store = createStore()
 const state = {
   coordinate: [
     [100, 100],
@@ -9,9 +8,8 @@ const state = {
     [400, 100]
   ],
   selectedPoint: null,
-  selectedPolygon: false
+  selectedPolygon: false,
+  prevCoordinate: null
 }
 
-store.set('coordinate', state.coordinate)
-store.set('selectedPoint', state.selectedPoint)
-store.set('selectedPolygon', state.selectedPolygon)
+export const store = createStore(state)
