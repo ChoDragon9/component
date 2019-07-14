@@ -9,7 +9,6 @@ const rand = () => {
 export const createApp = component({
   template () {
     return `<div class="container">
-      <sketchbook></sketchbook>
       <div class="panel">
         <button class="rect">사각형 추가</button>
         <button class="triangle">삼각형 추가</button>
@@ -18,6 +17,7 @@ export const createApp = component({
           <li>라인 클릭 시 포인트 추가</li>        
         </ul>
       </div>
+      <sketchbook></sketchbook>
     </div>`
   },
   events () {
