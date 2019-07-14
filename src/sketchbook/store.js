@@ -1,7 +1,21 @@
 import {createStore} from '../core/store'
 
 const state = {
-  coordinates: [],
+  coordinates: [
+    'defaultRect',
+    'defaultTriangle'
+  ],
+  defaultRect: [
+	  [100, 100],
+	  [100, 200],
+	  [200, 200],
+	  [200, 100]
+  ],
+  defaultTriangle: [
+	  [350, 100],
+	  [300, 200],
+	  [400, 200]
+  ],
   selectedPoint: {
     index: null,
     key: null
