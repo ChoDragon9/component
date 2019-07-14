@@ -1,11 +1,13 @@
 import {store} from './store'
 import * as _ from "../core/fp";
+import {save} from "./helper";
 
 export const createGeometry = (key, value) => {
 	const coordinates = store.get('coordinates')
 	store.set(key, value)
 	coordinates.push(key)
 	store.set('coordinates', coordinates)
+	save()
 }
 
 export const changeCoordinate = ({pageX, pageY}) => {
@@ -21,6 +23,7 @@ export const changeCoordinate = ({pageX, pageY}) => {
       changePolygon({x, y})
       break
   }
+	save()
 }
 
 export const changePoint = ({x, y}) => {
@@ -28,6 +31,7 @@ export const changePoint = ({x, y}) => {
   const coordinate = store.get(key)
   coordinate[index] = [x, y]
   store.set(key, coordinate)
+	save()
 }
 
 export const changePolygon = ({x, y}) => {
@@ -43,4 +47,5 @@ export const changePolygon = ({x, y}) => {
     store.set(key, newCoord)
     store.set('prevCoordinate', [x, y])
   }
+	save()
 }

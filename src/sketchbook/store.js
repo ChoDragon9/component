@@ -1,6 +1,7 @@
 import {createStore} from '../core/store'
+import {load} from "./helper";
 
-const state = {
+let state = {
   coordinates: [
     'defaultRect',
     'defaultTriangle'
@@ -24,6 +25,12 @@ const state = {
     key: null
   },
   prevCoordinate: null
+}
+
+const storageState = load()
+if (storageState) {
+	state = {...state, ...storageState}
+	console.log(state)
 }
 
 export const store = createStore(state)
