@@ -1,6 +1,13 @@
 import {store} from './store'
 import * as _ from "../core/fp";
 
+export const createGeometry = (key, value) => {
+	const coordinates = store.get('coordinates')
+	store.set(key, value)
+	coordinates.push(key)
+	store.set('coordinates', coordinates)
+}
+
 export const changeCoordinate = ({pageX, pageY}) => {
   const {left, top} = store.get('svgOffset')
   const x = pageX - left

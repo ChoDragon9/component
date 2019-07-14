@@ -1,46 +1,58 @@
 import {component} from './core/component'
-import {TodoList} from './basic/TodoList'
 import {Sketchbook} from './sketchbook/Sketchbook'
-import {store} from "./sketchbook/store";
+import {createGeometry} from "./sketchbook/mutation";
+
+const rand = () => {
+	return parseInt(Math.random() * 1000000)
+}
 
 export const createApp = component({
   template () {
-    return `<div>
-      <todo-list></todo-list>
+    return `<div class="container">
       <sketchbook></sketchbook>
-      <input type="button" value="Add">
+      <div class="panel">
+        <button class="rect">사각형 추가</button>
+        <button class="triangle">삼각형 추가</button>
+        <ul>
+          <li>모양 추가 후 드래그 가능</li>
+          <li>라인 클릭 시 포인트 추가</li>        
+        </ul>
+      </div>
     </div>`
   },
   events () {
     return [
-      ['input[type="button"]', 'onclick', 'onClick']
+	    ['button.rect', 'onclick', 'addRect'],
+      ['button.triangle', 'onclick', 'addTriangle']
     ]
   },
   methods () {
     return {
-      onClick () {
-        const rand = () => {
-          return parseInt(Math.random() * 1000000)
-        }
-
-        const newKey = `coordinate${rand()}`
-        const coordinates = store.get('coordinates')
-        const val = [
-          [100, 100],
-          [100, 400],
-          [400, 400],
-          [400, 100]
-        ]
-
-        store.set(newKey, val)
-        coordinates.push(newKey)
-        store.set('coordinates', coordinates)
-      }
+	    addRect () {
+		    createGeometry(
+			    `coordinate${rand()}`,
+			    [
+				    [100, 100],
+				    [100, 200],
+				    [200, 200],
+				    [200, 100]
+			    ]
+		    )
+	    },
+	    addTriangle () {
+		    createGeometry(
+			    `coordinate${rand()}`,
+			    [
+				    [150, 100],
+				    [100, 200],
+				    [200, 200]
+			    ]
+		    )
+	    }
     }
   },
   components () {
     return [
-      ['todo-list', TodoList],
       ['sketchbook', Sketchbook]
     ]
   }

@@ -14,9 +14,9 @@ export const Sketchbook = component({
       <circle props="${key}"></circle>`
     })
     return `
-      <div>
-        <svg width="500"
-             height="500"
+      <div class="sketchbook">
+        <svg width="100%"
+             height="100%"
              xmlns="http://www.w3.org/2000/svg">
           ${html}
         </svg>
