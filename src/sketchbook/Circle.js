@@ -1,5 +1,6 @@
 import {component} from '../core/component'
 import {store} from "./store";
+import {clearSelectedPoint, selectPoint} from "./mutation";
 
 export const Circle = component({
   data () {
@@ -28,16 +29,13 @@ export const Circle = component({
     const getIndex = elem => parseInt(elem.getAttribute('data-index'))
     return {
       select (event) {
-        store.set('selectedPoint', {
-          index: getIndex(event.target),
-          key: props
+        selectPoint({
+	        coordinateKey: props,
+          pointIndex: getIndex(event.target)
         })
       },
       unselect () {
-        store.set('selectedPoint', {
-          index: null,
-          key: null
-        })
+        clearSelectedPoint()
       }
     }
   },

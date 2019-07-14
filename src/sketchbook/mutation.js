@@ -49,3 +49,17 @@ export const changePolygon = ({x, y}) => {
   }
 	save()
 }
+
+export const selectPoint = ({coordinateKey, pointIndex}) => {
+	store.set('selectedPoint', {
+		index: pointIndex,
+		key: coordinateKey
+	})
+}
+
+export const clearSelectedPoint = () => {
+	store.set('selectedPoint', {
+		index: null,
+		key: null
+	})
+}
