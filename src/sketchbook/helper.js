@@ -7,6 +7,10 @@ const getStorage = () => {
 	return JSON.parse(localStorage.getItem('Sketchbook'))
 }
 
+export const clear = () => {
+	setStorage(null)
+}
+
 export const save = () => {
 	const coordinates = store.get('coordinates')
 	const coordinatesAxis = coordinates

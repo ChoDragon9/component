@@ -1,6 +1,7 @@
 import {component} from './core/component'
 import {Sketchbook} from './sketchbook/Sketchbook'
 import {createGeometry} from "./sketchbook/mutation";
+import {clear} from "./sketchbook/helper";
 
 const rand = () => {
 	return parseInt(Math.random() * 1000000)
@@ -12,6 +13,7 @@ export const createApp = component({
       <div class="panel">
         <button class="rect">사각형 추가</button>
         <button class="triangle">삼각형 추가</button>
+        <button class="clear">브라우저 저장소 모두 삭제</button>
         <ul>
           <li>모양 추가 후 드래그 가능</li>
           <li>라인 클릭 시 포인트 추가</li>        
@@ -23,7 +25,8 @@ export const createApp = component({
   events () {
     return [
 	    ['button.rect', 'onclick', 'addRect'],
-      ['button.triangle', 'onclick', 'addTriangle']
+	    ['button.triangle', 'onclick', 'addTriangle'],
+	    ['button.clear', 'onclick', 'clearAll']
     ]
   },
   methods () {
@@ -48,6 +51,10 @@ export const createApp = component({
 				    [200, 200]
 			    ]
 		    )
+	    },
+	    clearAll () {
+		    clear()
+		    location.reload()
 	    }
     }
   },
