@@ -54,26 +54,23 @@ export const Sketchbook = component({
         const {x, y} = calibrateCoordinate({pageX, pageY})
         const currentPoint = store.get('currentPoint')
         const currentPolygon = store.get('currentPolygon') || createNewKey()
-        switch (currentPoint) {
-          case 0: // Line 가능
-            store.set('currentPolygon', currentPolygon)
-	          createGeometry(currentPolygon, [[x, y], [x, y]])
-	          selectPoint({coordinateKey: currentPolygon, pointIndex: 1})
-	          store.set('currentPoint', 1)
-            break
-	        case 1:
-	        case 2:
-		        addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
-		        selectPoint({coordinateKey: currentPolygon, pointIndex: currentPoint + 1})
-		        store.set('currentPoint', currentPoint + 1)
-		        break
-	        case 3:
-		        addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
-		        clearSelectedPoint()
-		        store.set('currentPoint', 0)
-		        store.set('currentPolygon', null)
-		        break
-        }
+
+		    if (currentPoint === 0) {
+			    store.set('currentPolygon', currentPolygon)
+			    createGeometry(currentPolygon, [[x, y], [x, y]])
+		    }
+		    if (currentPoint >= 0 && currentPoint <= 2) {
+			    selectPoint({coordinateKey: currentPolygon, pointIndex: currentPoint + 1})
+			    store.set('currentPoint', currentPoint + 1)
+		    }
+		    if (currentPoint >= 1 && currentPoint <= 3) {
+			    addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
+		    }
+		    if (currentPoint === 3) {
+	        clearSelectedPoint()
+	        store.set('currentPoint', 0)
+	        store.set('currentPolygon', null)
+		    }
       }
     }
   },
