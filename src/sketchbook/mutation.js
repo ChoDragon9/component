@@ -73,3 +73,5 @@ export const addPoint = ({coordinateKey, coordinate}) => {
 	const coordinates = store.get(coordinateKey)
 	store.set(coordinateKey, [...coordinates, coordinate])
 }
+
+export const hasActiveGeometry = () => store.get('currentPolygon')

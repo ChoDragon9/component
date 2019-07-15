@@ -1,6 +1,6 @@
 import {component} from '../core/component'
 import {store} from "./store";
-import {clearSelectedPoint, selectPoint} from "./mutation";
+import {clearSelectedPoint, hasActiveGeometry, selectPoint} from "./mutation";
 
 export const Circle = component({
   data () {
@@ -35,6 +35,9 @@ export const Circle = component({
         })
       },
       unselect () {
+        if (hasActiveGeometry()) {
+          return
+        }
         clearSelectedPoint()
       }
     }
