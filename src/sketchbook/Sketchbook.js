@@ -7,6 +7,7 @@ import {
 import {Line} from './Line'
 import {Circle} from './Circle'
 import {Polygon} from './Polygon'
+import {createNewKey} from "./helper";
 
 export const Sketchbook = component({
   template () {
@@ -52,7 +53,7 @@ export const Sketchbook = component({
 		    const {pageX, pageY} = event
         const {x, y} = calibrateCoordinate({pageX, pageY})
         const currentPoint = store.get('currentPoint')
-        const currentPolygon = store.get('currentPolygon') || `custom_${Date.now()}`
+        const currentPolygon = store.get('currentPolygon') || createNewKey()
         switch (currentPoint) {
           case 0: // Line 가능
             store.set('currentPolygon', currentPolygon)

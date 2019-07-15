@@ -1,11 +1,7 @@
 import {component} from './core/component'
 import {Sketchbook} from './sketchbook/Sketchbook'
 import {createGeometry} from "./sketchbook/mutation";
-import {clear} from "./sketchbook/helper";
-
-const rand = () => {
-	return parseInt(Math.random() * 1000000)
-}
+import {clear, createNewKey} from "./sketchbook/helper";
 
 export const createApp = component({
   template () {
@@ -33,7 +29,7 @@ export const createApp = component({
     return {
 	    addRect () {
 		    createGeometry(
-			    `coordinate${rand()}`,
+			    createNewKey(),
 			    [
 				    [100, 100],
 				    [100, 200],
@@ -44,7 +40,7 @@ export const createApp = component({
 	    },
 	    addTriangle () {
 		    createGeometry(
-			    `coordinate${rand()}`,
+			    createNewKey(),
 			    [
 				    [150, 100],
 				    [100, 200],

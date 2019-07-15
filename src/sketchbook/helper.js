@@ -21,3 +21,9 @@ export const save = () => {
 }
 
 export const load = () => getStorage()
+
+export const createNewKey = () => `coordinate${rand()}`
+
+export const rand = () => {
+	return parseInt(Math.random() * 1000000)
+}
