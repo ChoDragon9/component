@@ -31,6 +31,8 @@ export const Line = component({
     return {
       addPoint (event) {
         event.preventDefault()
+	      event.stopPropagation()
+
         const {pageX, pageY, target} = event
         const index = parseInt(target.getAttribute('data-index'))
         const {left, top} = store.get('svgOffset')

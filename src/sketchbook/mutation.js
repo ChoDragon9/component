@@ -11,9 +11,7 @@ export const createGeometry = (key, value) => {
 }
 
 export const changeCoordinate = ({pageX, pageY}) => {
-  const {left, top} = store.get('svgOffset')
-  const x = pageX - left
-  const y = pageY - top
+	const {x, y} = calibrateCoordinate({pageX, pageY})
 
   switch (true) {
     case _.isNumber(store.get('selectedPoint').index):
@@ -24,6 +22,13 @@ export const changeCoordinate = ({pageX, pageY}) => {
       break
   }
 	save()
+}
+
+export const calibrateCoordinate = ({pageX, pageY}) => {
+	const {left, top} = store.get('svgOffset')
+	const x = pageX - left
+	const y = pageY - top
+	return {x, y}
 }
 
 export const changePoint = ({x, y}) => {
@@ -62,4 +67,9 @@ export const clearSelectedPoint = () => {
 		index: null,
 		key: null
 	})
+}
+
+export const addPoint = ({coordinateKey, coordinate}) => {
+	const coordinates = store.get(coordinateKey)
+	store.set(coordinateKey, [...coordinates, coordinate])
 }

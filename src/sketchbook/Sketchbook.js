@@ -1,6 +1,9 @@
 import {store} from './store'
 import {component} from '../core/component'
-import {changeCoordinate} from './mutation'
+import {
+	addPoint, calibrateCoordinate, changeCoordinate, clearSelectedPoint, createGeometry,
+	selectPoint
+} from './mutation'
 import {Line} from './Line'
 import {Circle} from './Circle'
 import {Polygon} from './Polygon'
@@ -32,7 +35,8 @@ export const Sketchbook = component({
   },
   events () {
     return [
-      ['svg', 'onmousemove', 'onMouseMove']
+      ['svg', 'onmousemove', 'onMouseMove'],
+      ['svg', 'onclick', 'onClick']
     ]
   },
   methods ({dom}) {
@@ -43,6 +47,32 @@ export const Sketchbook = component({
       onMouseMove (event) {
         const {pageX, pageY} = event
         changeCoordinate ({pageX, pageY})
+      },
+	    onClick (event) {
+		    const {pageX, pageY} = event
+        const {x, y} = calibrateCoordinate({pageX, pageY})
+        const currentPoint = store.get('currentPoint')
+        const currentPolygon = store.get('currentPolygon') || `custom_${Date.now()}`
+        switch (currentPoint) {
+          case 0: // Line 가능
+            store.set('currentPolygon', currentPolygon)
+	          createGeometry(currentPolygon, [[x, y], [x, y]])
+	          selectPoint({coordinateKey: currentPolygon, pointIndex: 1})
+	          store.set('currentPoint', 1)
+            break
+	        case 1:
+	        case 2:
+		        addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
+		        selectPoint({coordinateKey: currentPolygon, pointIndex: currentPoint + 1})
+		        store.set('currentPoint', currentPoint + 1)
+		        break
+	        case 3:
+		        addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
+		        clearSelectedPoint()
+		        store.set('currentPoint', 0)
+		        store.set('currentPolygon', null)
+		        break
+        }
       }
     }
   },

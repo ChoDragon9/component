@@ -26,7 +26,9 @@ let state = {
 	selectedPolygon: {
 		key: null
 	},
-	prevCoordinate: null
+	prevCoordinate: null,
+	currentPoint: 0,
+	currentPolygon: null
 }
 
 const storageState = load()
