@@ -12,7 +12,9 @@ export const createApp = component({
         <button class="clear">브라우저 저장소 모두 삭제</button>
         <ul>
           <li>모양 추가 후 드래그 가능</li>
-          <li>라인 클릭 시 포인트 추가</li>        
+          <li>라인 클릭 시 포인트 추가</li>
+          <li>배경 클릭 4번으로 사각형 추가</li>
+          <li>배경 클릭으로 사각형 추가시, ESC로 생성 취소</li>        
         </ul>
       </div>
       <sketchbook></sketchbook>
