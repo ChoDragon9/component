@@ -1,7 +1,7 @@
 import {store} from './store'
 import {component} from '../core/component'
 import {
-	addPoint, calibrateCoordinate, changeCoordinate, clearSelectedPoint, createGeometry,
+	addPoint, calibrateCoordinate, changeCoordinate, clearCustom, clearSelectedPoint, createGeometry, removeCoordinate,
 	selectPoint
 } from './mutation'
 import {Line} from './Line'
@@ -37,7 +37,8 @@ export const Sketchbook = component({
   events () {
     return [
       ['svg', 'onmousemove', 'onMouseMove'],
-      ['svg', 'onclick', 'onClick']
+      ['svg', 'onclick', 'onClick'],
+	    ['document', 'onkeyup', 'onKeyUp'],
     ]
   },
   methods ({dom}) {
@@ -67,11 +68,20 @@ export const Sketchbook = component({
 			    addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
 		    }
 		    if (currentPoint === 3) {
-	        clearSelectedPoint()
-	        store.set('currentPoint', 0)
-	        store.set('currentPolygon', null)
+			    clearCustom()
 		    }
-      }
+      },
+	    onKeyUp (event) {
+      	const {keyCode} = event
+		    if (keyCode !== 27) {
+      		return
+		    }
+		    const currentPolygon = store.get('currentPolygon')
+		    if (currentPolygon) {
+			    removeCoordinate(currentPolygon)
+			    clearCustom()
+		    }
+	    }
     }
   },
   beforeCreate ({render}) {

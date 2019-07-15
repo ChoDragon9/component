@@ -7,6 +7,7 @@ export const createStore = (state = {}) => {
 
   return {
     set,
+    delete: remove({store, subscriber}),
     get: getter({store}),
     watch: watch({subscriber})
   }
@@ -19,6 +20,11 @@ const setDefaultState = ({state, set}) => {
 const mutation = ({store, subscriber}) => (key, value) => {
   store.set(key, value)
   nodify({subscriber, store, key})
+}
+
+const remove = ({store, subscriber}) => key => {
+	store.delete(key)
+	nodify({subscriber, store, key})
 }
 
 const nodify = ({subscriber, key, store}) => {

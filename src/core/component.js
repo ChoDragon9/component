@@ -39,9 +39,13 @@ export const parseDOM = (template) => {
 
 export const bindEvent = (events, methods, dom) => {
   for (const [selector, event, methodName] of events) {
-    getElem(selector, dom).forEach(elem => {
-      elem[event] = methods[methodName]
-    })
+	  if (selector === 'document') {
+      document[event] = methods[methodName]
+    } else {
+      getElem(selector, dom).forEach(elem => {
+        elem[event] = methods[methodName]
+      })
+    }
   }
 }
 

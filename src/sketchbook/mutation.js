@@ -75,3 +75,15 @@ export const addPoint = ({coordinateKey, coordinate}) => {
 }
 
 export const hasActiveGeometry = () => store.get('currentPolygon')
+
+export const clearCustom = () => {
+	clearSelectedPoint()
+	store.set('currentPoint', 0)
+	store.set('currentPolygon', null)
+}
+
+export const removeCoordinate = coordinateKey => {
+	const coordinates = store.get('coordinates').filter(key => key !== coordinateKey)
+	store.set('coordinates', coordinates)
+	save()
+}
