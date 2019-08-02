@@ -1,6 +1,7 @@
 import {component} from '../../core/component'
 import {ListComponent} from "./ListComponent";
 import {ButtonComponent} from "./ButtonComponent";
+import {CounterComponent} from "./CounterComponent";
 
 export const EntryComponent = component({
   data () {
@@ -21,13 +22,15 @@ export const EntryComponent = component({
       <button class="my-btn">${btn}</button>
       <h2>Props: ${props}</h2>
       <button-component></button-component>
+      <counter-component></counter-component>
       <list-component props="list"></list-component>
     </div>`
   },
 	components () {
   	return [
   		['list-component', ListComponent],
-		  ['button-component', ButtonComponent]
+		  ['button-component', ButtonComponent],
+		  ['counter-component', CounterComponent]
 	  ]
 	},
   events () {
