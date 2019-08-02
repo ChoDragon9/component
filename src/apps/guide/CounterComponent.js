@@ -23,12 +23,19 @@ export const CounterComponent = component({
 	methods () {
 		return {
 			upCount () {
-				const count = store.get('count')
-				store.set('count', count + 1)
+				this.calcCount(1)
 			},
 			downCount () {
-				const count = store.get('count')
-				store.set('count', count - 1)
+				this.calcCount(-1)
+			},
+			calcCount (num) {
+				this.setCount(this.getCount() + num)
+			},
+			getCount () {
+				return store.get('count')
+			},
+			setCount (count) {
+				store.set('count', count)
 			}
 		}
 	},
