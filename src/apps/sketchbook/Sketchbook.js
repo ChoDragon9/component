@@ -1,5 +1,5 @@
 import {store} from './store/store'
-import {component} from '../core/component'
+import {component} from '../../core/component'
 import {
 	addPoint, calibrateCoordinate, changeCoordinate, clearCustom, createGeometry, removeCoordinate,
 	selectPoint

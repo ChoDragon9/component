@@ -1,7 +1,7 @@
-import {component} from './core/component'
-import {Sketchbook} from './sketchbook/Sketchbook'
-import {createGeometry} from "./sketchbook/store/mutation";
-import {clear, createNewKey} from "./sketchbook/helper";
+import {component} from '../../core/component'
+import {Sketchbook} from './Sketchbook'
+import {createGeometry} from "./store/mutation";
+import {clear, createNewKey} from "./helper";
 
 export const createApp = component({
   template () {
@@ -10,7 +10,7 @@ export const createApp = component({
         <button class="rect">사각형 추가</button>
         <button class="triangle">삼각형 추가</button>
         <button class="clear">브라우저 저장소 모두 삭제</button>
-        <ul>
+        <ul class="guide">
           <li>모양 추가 후 드래그 가능</li>
           <li>라인 클릭 시 포인트 추가</li>
           <li>배경 클릭 4번으로 사각형 추가</li>

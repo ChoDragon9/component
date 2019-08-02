@@ -1,5 +1,5 @@
 import {store} from './store'
-import * as _ from "../../core/fp";
+import * as _ from "../../../core/fp";
 import {save} from "../helper";
 
 export const createGeometry = (key, value) => {

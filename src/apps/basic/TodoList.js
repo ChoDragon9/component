@@ -1,4 +1,4 @@
-import {component} from '../core/component'
+import {component} from '../../core/component'
 import {TodoItem} from './TodoItem'
 import {store} from './store'
 
