@@ -13,7 +13,7 @@ export const Polygon = component({
     const html = `<polygon points="${points}" fill="${fill}"></polygon>`
     return `<g>${html}</g>`
   },
-  beforeCreate ({render, props}) {
+  created ({render, props}) {
     store.watch(props, render)
   },
   events () {

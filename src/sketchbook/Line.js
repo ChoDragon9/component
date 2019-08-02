@@ -42,7 +42,7 @@ export const Line = component({
       }
     }
   },
-  beforeCreate ({render, props}) {
+	created ({render, props}) {
     store.watch(props, render)
   }
 })

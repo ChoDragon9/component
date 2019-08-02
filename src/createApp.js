@@ -20,6 +20,11 @@ export const createApp = component({
       <sketchbook></sketchbook>
     </div>`
   },
+	components () {
+		return [
+			['sketchbook', Sketchbook]
+		]
+	},
   events () {
     return [
 	    ['button.rect', 'onclick', 'addRect'],
@@ -55,10 +60,5 @@ export const createApp = component({
 		    location.reload()
 	    }
     }
-  },
-  components () {
-    return [
-      ['sketchbook', Sketchbook]
-    ]
   }
 })

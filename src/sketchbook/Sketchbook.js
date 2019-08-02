@@ -42,9 +42,6 @@ export const Sketchbook = component({
     ]
   },
   methods ({dom}) {
-    setTimeout(() => {
-      store.set('svgOffset', dom.getBoundingClientRect())
-    })
     return {
       onMouseMove (event) {
         const {pageX, pageY} = event
@@ -84,7 +81,10 @@ export const Sketchbook = component({
 	    }
     }
   },
-  beforeCreate ({render}) {
+	created ({dom, render}) {
+  	setTimeout(() => {
+			store.set('svgOffset', dom.getBoundingClientRect())
+	  })
     store.watch('coordinates', render)
-  }
+	}
 })
