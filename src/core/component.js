@@ -1,6 +1,18 @@
 import * as _ from './fp'
 
-export const component = (options) => (props = _.always({})) => {
+/**
+ * @param options
+	{
+		 data = _.always({}),
+		 template = _.noop,
+		 components = _.always([]),
+		 methods = _.always([]),
+		 events = _.always([]),
+		 beforeCreate = _.noop,
+     created = _.noop
+	 }
+ */
+export const component = (options) => (props = null) => {
   const {
     beforeCreate = _.noop,
     created = _.noop
