@@ -1,6 +1,6 @@
 import {component} from './core/component'
 import {Sketchbook} from './sketchbook/Sketchbook'
-import {createGeometry} from "./sketchbook/mutation";
+import {createGeometry} from "./sketchbook/store/mutation";
 import {clear, createNewKey} from "./sketchbook/helper";
 
 export const createApp = component({

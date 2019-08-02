@@ -1,4 +1,4 @@
-import {store} from './store'
+import {store} from './store/store'
 
 const setStorage = value => {
 	localStorage.setItem('Sketchbook', JSON.stringify(value))

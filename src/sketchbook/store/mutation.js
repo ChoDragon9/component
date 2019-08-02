@@ -1,6 +1,6 @@
 import {store} from './store'
-import * as _ from "../core/fp";
-import {save} from "./helper";
+import * as _ from "../../core/fp";
+import {save} from "../helper";
 
 export const createGeometry = (key, value) => {
 	const coordinates = store.get('coordinates')

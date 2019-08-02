@@ -1,5 +1,5 @@
-import {component} from '../core/component'
-import {store} from './store'
+import {component} from '../../core/component'
+import {store} from '../store/store'
 
 export const Line = component({
   data () {

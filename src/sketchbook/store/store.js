@@ -1,5 +1,5 @@
-import {createStore} from '../core/store'
-import {load} from "./helper";
+import {createStore} from '../../core/store'
+import {load} from "../helper";
 
 let state = {
 	coordinates: [

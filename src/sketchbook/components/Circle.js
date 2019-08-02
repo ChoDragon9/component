@@ -1,6 +1,6 @@
-import {component} from '../core/component'
-import {store} from "./store";
-import {clearSelectedPoint, hasActiveGeometry, selectPoint} from "./mutation";
+import {component} from '../../core/component'
+import {store} from "../store/store";
+import {clearSelectedPoint, hasActiveGeometry, selectPoint} from "../store/mutation";
 
 export const Circle = component({
   data () {

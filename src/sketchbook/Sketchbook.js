@@ -1,12 +1,12 @@
-import {store} from './store'
+import {store} from './store/store'
 import {component} from '../core/component'
 import {
-	addPoint, calibrateCoordinate, changeCoordinate, clearCustom, clearSelectedPoint, createGeometry, removeCoordinate,
+	addPoint, calibrateCoordinate, changeCoordinate, clearCustom, createGeometry, removeCoordinate,
 	selectPoint
-} from './mutation'
-import {Line} from './Line'
-import {Circle} from './Circle'
-import {Polygon} from './Polygon'
+} from './store/mutation'
+import {Line} from './components/Line'
+import {Circle} from './components/Circle'
+import {Polygon} from './components/Polygon'
 import {createNewKey} from "./helper";
 
 export const Sketchbook = component({
