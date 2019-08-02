@@ -14,17 +14,20 @@ import * as _ from './fp'
  */
 export const component = (options) => (props = null) => {
   const {
+	  data = _.always({}),
     beforeCreate = _.noop,
     created = _.noop
   } = options
-  beforeCreate({props})
+  const state = data()
+  beforeCreate({props, data: state})
 
   const render = create(options)
   const dom = render(props)
 	created({
 		dom,
+		props,
+    data: state,
 		render: replaceWith({dom, render, props}),
-		props
 	})
   return dom
 }
