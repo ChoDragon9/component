@@ -1,5 +1,6 @@
 import {component} from '../../core/component'
 import {NowComponent} from "./NowComponent";
+import {NowControllerComponent} from "./NowControllerComponent";
 
 export const ReactiveComponent = component({
   data () {
@@ -7,26 +8,23 @@ export const ReactiveComponent = component({
       now: Date.now()
     }
   },
-  template ({data}) {
+  template () {
     return `<div>
 			<now props="now"></now>
-			<button class="now-btn">Change Now</button>
+			<now-controller on="changeNow"></now-controller>
 		</div>`
   },
 	components () {
   	return [
-  	  ['now', NowComponent]
+  	  ['now', NowComponent],
+		  ['now-controller', NowControllerComponent],
 	  ]
 	},
-  events () {
-    return [
-      ['button.now-btn', 'onclick', 'changeNow'],
-    ]
-  },
   methods ({store}) {
     return {
-      changeNow () {
-        store.set('now', Date.now())
+      changeNow (data, message) {
+      	console.log(message)
+        store.set('now', data)
       },
     }
   }

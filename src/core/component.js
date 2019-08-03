@@ -58,16 +58,23 @@ const create = ({
 		methods,
 		events,
 		store,
-  }) => props => {
+  }) => ({props, emit}) => {
   const dom = parseDOM(template({data: state, props}))
-  bindEvent(events(), methods({dom, data: state, props, store}), dom)
-  bindComponent(components(), dom, state)
+	const methodResult = methods({dom, data: state, props, store, emit})
+
+  bindEvent(events(), methodResult, dom)
+  bindComponent({
+	  dom,
+	  state,
+	  components: components(),
+	  methodResult
+  })
   return dom
 }
 
 const replaceWith = (params) => () => {
-	const {dom, render, props} = params
-  const newDom = render(props)
+	const {dom, render, props, on} = params
+  const newDom = render({props, emit: on})
 
 	dom.replaceWith(newDom)
 	Object.assign(params, {dom: newDom})
@@ -98,18 +105,20 @@ export const bindEvent = (events, methods, dom) => {
   }
 }
 
-export const bindComponent = (components, dom, state) => {
+export const bindComponent = ({components, dom, state, methodResult}) => {
 	for (const [selector, component] of components) {
 		getElem(selector, dom).forEach(elem => {
 			replaceWith({
 				dom: elem,
 				render: component,
-				props: getProps(elem, state)
+				props: getProps(elem, state),
+				on: getOn(elem, methodResult)
 			})()
 		})
 	}
 }
 
+// props는 자식에게 전달할 데이터
 const getProps = (elem, state) => {
   const attr = getAttr(elem, 'props')
   if (attr) {
@@ -121,4 +130,12 @@ const getProps = (elem, state) => {
   } else {
     return {}
   }
+}
+
+// on은 자식으로부터 전달받은 콜백
+const getOn = (elem, methodResult) => {
+	const attr = getAttr(elem, 'on')
+	if (attr && methodResult) {
+		return methodResult[attr]
+	}
 }
