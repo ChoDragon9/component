@@ -47,10 +47,7 @@ export const component = (options) => (props = null) => {
     data: state,
 		render: renderFn,
 	})
-	store.watchAll(({key, data}) => {
-		state[key] = data
-		renderFn()
-	})
+	reactive({store, state, renderFn})
   return dom
 }
 
@@ -74,6 +71,13 @@ const replaceWith = (params) => () => {
 
 	dom.replaceWith(newDom)
 	Object.assign(params, {dom: newDom})
+}
+
+const reactive = ({store, state, renderFn}) => {
+	store.watchAll(({key, data}) => {
+		state[key] = data
+		renderFn()
+	})
 }
 
 export const parseDOM = (template) => {
