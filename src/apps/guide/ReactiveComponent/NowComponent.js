@@ -1,4 +1,4 @@
-import {component} from '../../core/component'
+import {component} from '../../../core/component'
 
 export const NowComponent = component({
   template ({props}) {
