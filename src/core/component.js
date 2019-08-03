@@ -68,9 +68,12 @@ const create = ({
   return dom
 }
 
-const replaceWith = ({dom, render, props}) => () => {
+const replaceWith = (params) => () => {
+	const {dom, render, props} = params
   const newDom = render(props)
-  dom.replaceWith(newDom)
+
+	dom.replaceWith(newDom)
+	Object.assign(params, {dom: newDom})
 }
 
 export const parseDOM = (template) => {
