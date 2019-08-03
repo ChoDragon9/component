@@ -1,5 +1,5 @@
 import {EntryComponent} from './EntryComponent'
-import {getElem} from "../../core/component"
+import {getElem} from "../../core/helper";
 
 window.onload = () => {
   getElem('#container')[0]

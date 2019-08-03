@@ -1,1 +1,1 @@
-import index from './apps/guide/index.js'
+import index from './apps/basic/index.js'

@@ -1,10 +1,13 @@
 import * as _ from './fp'
+import {createStore} from "./store";
+import {addEvent, getAttr, getElem} from "./helper";
 
 /**
  * @param options
 	{
 		 data = _.always({}),
 		 template = _.noop,
+		  template({data: state, props})
 		 components = _.always([]),
 		 methods = _.always([]),
 		 events = _.always([]),
@@ -41,7 +44,8 @@ const create = ({
   }) => props => {
   const state = data()
   const dom = parseDOM(template({data: state, props}))
-  bindEvent(events(), methods({dom, data: state, props}), dom)
+  const store = createStore(state)
+  bindEvent(events(), methods({dom, data: state, props, store}), dom)
   bindComponent(components(), dom, state)
   return dom
 }
@@ -70,20 +74,16 @@ export const bindEvent = (events, methods, dom) => {
   }
 }
 
-const addEvent = (methods, methodName) => event => {
-  methods[methodName].call(methods, event)
-}
-
 export const bindComponent = (components, dom, state) => {
-  for (const [selector, component] of components) {
-    getElem(selector, dom).forEach(elem => {
-      replaceWith({
-        dom: elem,
-        render: component,
-        props: getProps(elem, state)
-      })()
-    })
-  }
+	for (const [selector, component] of components) {
+		getElem(selector, dom).forEach(elem => {
+			replaceWith({
+				dom: elem,
+				render: component,
+				props: getProps(elem, state)
+			})()
+		})
+	}
 }
 
 const getProps = (elem, state) => {
@@ -98,9 +98,3 @@ const getProps = (elem, state) => {
     return {}
   }
 }
-
-export const getElem = (selector, parent = document) => {
-  return parent.querySelectorAll(selector)
-}
-
-const getAttr = (elem, attr) => elem.getAttribute(attr)

@@ -20,8 +20,8 @@ export const TodoItem = component({
   },
   methods () {
     return {
-      removeItem () {
-        const id = this.parentNode.getAttribute('data-id')
+      removeItem (event) {
+        const id = event.target.parentNode.getAttribute('data-id')
         const todo = store.get('todo')
           .filter((item) => item.id.toString() !== id)
         store.set('todo', todo)
@@ -33,7 +33,7 @@ export const TodoItem = component({
       ['li > button', 'onclick', 'removeItem']
     ]
   },
-  beforeCreate ({render}) {
+  created ({render}) {
     store.watch('todo', render)
   }
 })

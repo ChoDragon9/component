@@ -2,6 +2,7 @@ import {component} from '../../core/component'
 import {ListComponent} from "./ListComponent";
 import {ButtonComponent} from "./ButtonComponent";
 import {CounterComponent} from "./CounterComponent";
+import {ReactiveComponent} from "./ReactiveComponent";
 
 export const EntryComponent = component({
   data () {
@@ -24,13 +25,15 @@ export const EntryComponent = component({
       <button-component></button-component>
       <counter-component></counter-component>
       <list-component props="list"></list-component>
+      <reactive-component></reactive-component>
     </div>`
   },
 	components () {
   	return [
   		['list-component', ListComponent],
 		  ['button-component', ButtonComponent],
-		  ['counter-component', CounterComponent]
+		  ['counter-component', CounterComponent],
+	    ['reactive-component', ReactiveComponent]
 	  ]
 	},
   events () {
