@@ -39,8 +39,8 @@ export const ReactiveComponent = component({
   methods ({store}) {
     return {
       changeMessage () {
-        console.log(store.get('message'))
-        // store.set('message', 'Now ' + Date.now())
+        console.log(Date.now())
+        store.set('message', 'Now ' + Date.now())
       }
     }
   }

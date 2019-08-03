@@ -39,12 +39,17 @@ export const component = (options) => (props = null) => {
 	  store,
   })
   const dom = render(props)
+	const renderFn = replaceWith({dom, render, props})
 
 	created({
 		dom,
 		props,
     data: state,
-		render: replaceWith({dom, render, props}),
+		render: renderFn,
+	})
+	store.watchAll(({key, data}) => {
+		state[key] = data
+		renderFn()
 	})
   return dom
 }
@@ -66,7 +71,6 @@ const create = ({
 const replaceWith = ({dom, render, props}) => () => {
   const newDom = render(props)
   dom.replaceWith(newDom)
-  dom = newDom
 }
 
 export const parseDOM = (template) => {
