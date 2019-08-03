@@ -15,7 +15,7 @@ import {addEvent, getAttr, getElem} from "./helper";
      created = _.noop
 	 }
  */
-export const component = (options) => (props = null) => {
+export const component = (options) => ({props, emit} = {}) => {
   const {
 	  data = _.always({}),
 	  template = _.noop,
@@ -38,7 +38,7 @@ export const component = (options) => (props = null) => {
 	  events,
 	  store,
   })
-  const dom = render(props)
+  const dom = render({props, emit})
 	const renderFn = replaceWith({dom, render, props})
 
 	created({
@@ -73,6 +73,7 @@ const create = ({
 }
 
 const replaceWith = (params) => () => {
+	// render는 create와 component 함수의 반환 함수, 즉 2가지다.
 	const {dom, render, props, on} = params
   const newDom = render({props, emit: on})
 
