@@ -18,14 +18,28 @@ import {addEvent, getAttr, getElem} from "./helper";
 export const component = (options) => (props = null) => {
   const {
 	  data = _.always({}),
+	  template = _.noop,
+	  components = _.always([]),
+	  methods = _.always([]),
+	  events = _.always([]),
     beforeCreate = _.noop,
     created = _.noop
   } = options
   const state = data()
+	const store = createStore(state)
+
   beforeCreate({props, data: state})
 
-  const render = create(options)
+  const render = create({
+	  state,
+	  template,
+	  components,
+	  methods,
+	  events,
+	  store,
+  })
   const dom = render(props)
+
 	created({
 		dom,
 		props,
@@ -36,15 +50,14 @@ export const component = (options) => (props = null) => {
 }
 
 const create = ({
-    data = _.always({}),
-    template = _.noop,
-    components = _.always([]),
-    methods = _.always([]),
-    events = _.always([])
+		state,
+		template,
+		components,
+		methods,
+		events,
+		store,
   }) => props => {
-  const state = data()
   const dom = parseDOM(template({data: state, props}))
-  const store = createStore(state)
   bindEvent(events(), methods({dom, data: state, props, store}), dom)
   bindComponent(components(), dom, state)
   return dom
