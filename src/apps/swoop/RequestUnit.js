@@ -1,4 +1,6 @@
 import {component} from "../../core/component";
+import {RequestUnitListComponent} from "./RequestUnit/RequestUnitList";
+import {RequestUnitFormComponent} from "./RequestUnit/RequestUnitForm";
 
 export const RequestUnitComponent = component({
 	data () {
@@ -7,36 +9,27 @@ export const RequestUnitComponent = component({
 			selectedRequestUnit: null
 		}
 	},
-	template ({data}) {
-		const {requestUnits, selectedRequestUnit} = data
-
-		const requestUnitsTemplate = requestUnits
-			.map(({url}, i) => `<li data-index="${i}">${url}</li>`)
-			.join('')
-		const selectedUnitTemplate =
-			selectedRequestUnit ?
-				`<div>
-					<h3>Selected Unit</h3>
-					<button
-						type="button" 
-						class="save-unit">삭제</button>
-					<input type="text" value="${selectedRequestUnit.method}">
-					<input type="text" value="${selectedRequestUnit.url}" class="unit-url">
-				</div>` :
-				``
-
+	template () {
 		return `<div>
       <h2>Request Unit</h2>
       <button type="button" class="add-unit">Unit 추가</button>
-      <ul>${requestUnitsTemplate}</ul>
-      ${selectedUnitTemplate}
+      <list 
+      	props="requestUnits"
+      	on="selectUnit"></list>
+      <form 
+      	props="selectedRequestUnit"
+        on="onChangeUrl"></form>
     </div>`
 	},
 	events () {
 		return [
 			['.add-unit', 'onclick', 'addRequestUnit'],
-			['.unit-url', 'onkeyup', 'onChangeUrl'],
-			['ul li', 'onclick', 'selectUnit']
+		]
+	},
+	components () {
+		return [
+			['list', RequestUnitListComponent],
+			['form', RequestUnitFormComponent],
 		]
 	},
 	methods ({store}) {
@@ -57,13 +50,10 @@ export const RequestUnitComponent = component({
 				store.set('requestUnits', requestUnits)
 				store.set('selectedRequestUnit', newUnit)
 			},
-			onChangeUrl (event) {
-				const selectedRequestUnit = store.get('selectedRequestUnit')
-				selectedRequestUnit.url = event.target.value
+			onChangeUrl (selectedRequestUnit) {
 				store.set('selectedRequestUnit', selectedRequestUnit)
 			},
-			selectUnit (event) {
-				const {index} = event.target.dataset
+			selectUnit (index) {
 				const requestUnits = store.get('requestUnits')
 
 				store.set('selectedRequestUnit', requestUnits[index])
