@@ -51,6 +51,13 @@ export const RequestUnitComponent = component({
 				store.set('selectedRequestUnit', newUnit)
 			},
 			onChangeUrl (selectedRequestUnit) {
+				if (selectedRequestUnit === null) {
+					const requestUnits = store.get('requestUnits')
+					const selectedUnit = store.get('selectedRequestUnit')
+					const index = requestUnits.findIndex(({url}) => url === selectedUnit.url)
+					requestUnits.splice(index, 1)
+					store.set('requestUnits', requestUnits)
+				}
 				store.set('selectedRequestUnit', selectedRequestUnit)
 			},
 			selectUnit (index) {
@@ -62,9 +69,6 @@ export const RequestUnitComponent = component({
 	}
 })
 
-// - [DONE] Request Unit Container
-	// - [DONE] Request Unit List
-	// - [DONE] Request Unit 추가
 // - Request Unit
 	// - 삭제 버튼
 	// - HTTP 요청 버튼

@@ -6,10 +6,14 @@ export const RequestUnitFormComponent = component({
 			props ?
 				`<button
 					type="button" 
-					class="save-unit">삭제</button>
+					class="delete">삭제</button>
+				<button
+					type="button" 
+					class="save">저장</button>
 				<input 
 					type="text" 
-					value="${props.method}">
+					value="${props.method}"
+					class="unit-method">
 				<input 
 					type="text" 
 					value="${props.url}"
@@ -23,15 +27,26 @@ export const RequestUnitFormComponent = component({
 	},
 	events () {
 		return [
+			['.save', 'onclick', 'onSave'],
+			['.delete', 'onclick', 'onDelete'],
+			['.unit-method', 'onkeyup', 'onChangeMethod'],
 			['.unit-url', 'onkeyup', 'onChangeUrl'],
 		]
 	},
 	methods ({emit, props}) {
 		return {
-			onChangeUrl (event) {
-				props.url = event.target.value
+			onDelete () {
+				emit(null)
+			},
+			onSave () {
 				emit(props)
 			},
+			onChangeMethod ({target: {value}}) {
+				props.method = value
+			},
+			onChangeUrl ({target: {value}}) {
+				props.url = value
+			}
 		}
 	}
 })
