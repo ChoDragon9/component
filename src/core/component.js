@@ -123,11 +123,7 @@ export const bindComponent = ({components, dom, state, methodResult}) => {
 const getProps = (elem, state) => {
   const attr = getAttr(elem, 'props')
   if (attr) {
-    if (state[attr]) {
-      return state[attr]
-    } else {
-      return attr
-    }
+    return state[attr]
   } else {
     return {}
   }
