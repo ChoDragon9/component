@@ -20,17 +20,17 @@ const setDefaultState = ({state, set}) => {
   Object.entries(state).forEach(([key, value]) => set(key, value))
 }
 
-const mutation = ({store, subscriber}) => (key, value) => {
+const mutation = ({store, subscriber}) => (key, value, noNotify = true) => {
   store.set(key, value)
-  nodify({subscriber, store, key})
+	noNotify && notify({subscriber, store, key})
 }
 
 const remove = ({store, subscriber}) => key => {
 	store.delete(key)
-	nodify({subscriber, store, key})
+	notify({subscriber, store, key})
 }
 
-const nodify = ({subscriber, key, store}) => {
+const notify = ({subscriber, key, store}) => {
   const data = store.get(key)
   if (subscriber.has(key)) {
     for (const listener of subscriber.get(key)) {

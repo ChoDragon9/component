@@ -25,7 +25,7 @@ export const component = (options) => ({props, emit} = {}) => {
     beforeCreate = _.noop,
     created = _.noop
   } = options
-  const state = data()
+  const state = data({props})
 	const store = createStore(state)
 
   beforeCreate({props, data: state})
