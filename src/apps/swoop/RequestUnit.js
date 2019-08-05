@@ -1,11 +1,13 @@
 import {component} from "../../core/component";
 import {RequestUnitListComponent} from "./RequestUnit/RequestUnitList";
 import {RequestUnitFormComponent} from "./RequestUnit/RequestUnitForm";
+import {getStorage, setStorage} from "./helper";
 
 export const RequestUnitComponent = component({
 	data () {
+		const requestUnits = getStorage() || []
 		return {
-			requestUnits: [],
+			requestUnits,
 			selectedRequestUnit: null
 		}
 	},
@@ -61,6 +63,8 @@ export const RequestUnitComponent = component({
 					store.set('requestUnits', requestUnits)
 				}
 				store.set('selectedRequestUnit', selectedRequestUnit)
+
+				setStorage(store.get('requestUnits'))
 			},
 			selectUnit (index) {
 				const requestUnits = store.get('requestUnits')
