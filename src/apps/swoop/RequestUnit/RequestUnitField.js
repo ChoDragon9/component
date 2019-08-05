@@ -3,14 +3,14 @@ import {component} from "../../../core/component";
 export const RequestUnitFieldComponent = component({
 	data ({props}) {
 		return {
-			params: props,
+			fields: props,
 			key: '',
 			value: '',
 			description: '',
 		}
 	},
 	template ({data}) {
-		const params = data.params
+		const fields = data.fields
 			.map(({key, value, description}, i) => {
 				return `<tr data-index="${i}">
 					<td>${key}</td>
@@ -48,7 +48,7 @@ export const RequestUnitFieldComponent = component({
 					</td>
 				</tr>
 			</table>
-			<table>${params}</table>
+			<table>${fields}</table>
 		</div>`
 	},
 	events () {
@@ -76,17 +76,17 @@ export const RequestUnitFieldComponent = component({
 				store.set('description', value, false)
 			},
 			onSaveParam () {
-				const params = store.get('params')
+				const fields = store.get('fields')
 				const key = store.get('key')
 				const value = store.get('value')
 				const description = store.get('description')
 
-				store.set('params', [].concat(params, {
+				store.set('fields', [].concat(fields, {
 					key,
 					value,
 					description
 				}))
-				emit(store.get('params'))
+				emit(store.get('fields'))
 			},
 		}
 	}

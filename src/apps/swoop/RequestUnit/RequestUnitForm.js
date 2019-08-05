@@ -2,16 +2,14 @@ import {component} from "../../../core/component";
 import {RequestUnitFieldComponent} from "./RequestUnitField";
 
 export const RequestUnitFormComponent = component({
-	data () {
+	data ({props}) {
+		const {params, headers} = props || {}
 		return {
-			params: [],
-			key: '',
-			value: '',
-			description: '',
+			params,
+			headers
 		}
 	},
-	template ({props, data}) {
-		props && (data.params = props.params)
+	template ({props}) {
 		const selectedUnitTemplate =
 			props ?
 				`
@@ -44,6 +42,11 @@ export const RequestUnitFormComponent = component({
 					</tr>
 					<tr>
 						<td>Headers</td>
+						<td>
+							<field 
+								props="headers"
+								on="onChangeHeaders"></field>
+						</td>
 					</tr>
 					<tr>
 						<td>Body Type</td>
@@ -98,6 +101,9 @@ export const RequestUnitFormComponent = component({
 			},
 			onChangeParams (params) {
 				props.params = params
+			},
+			onChangeHeaders (headers) {
+				props.headers = headers
 			}
 		}
 	}
