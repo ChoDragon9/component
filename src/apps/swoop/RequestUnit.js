@@ -13,12 +13,14 @@ export const RequestUnitComponent = component({
 		return `<div>
       <h2>Request Unit</h2>
       <button type="button" class="add-unit">Unit 추가</button>
-      <list 
-      	props="requestUnits"
-      	on="selectUnit"></list>
-      <form 
-      	props="selectedRequestUnit"
-        on="onChangeUrl"></form>
+      <div>
+	      <list 
+	        props="requestUnits"
+	        on="selectUnit"></list>
+	      <form 
+	        props="selectedRequestUnit"
+	        on="onChangeUrl"></form>
+        </div>
     </div>`
 	},
 	events () {
@@ -38,11 +40,11 @@ export const RequestUnitComponent = component({
 				const requestUnits = store.get('requestUnits')
 				const newUnit = {
 					method: 'GET',
-					url: Date.now(),
+					url: '',
 					params: [],
 					headers: [],
 					body: {
-						type: 'none',
+						type: 'json',
 						data: []
 					}
 				}

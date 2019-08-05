@@ -6,7 +6,10 @@ export const RequestUnitListComponent = component({
 		.map(({url}, i) => `<li data-index="${i}">${url}</li>`)
 		.join('')
 
-		return `<ul>${requestUnitsTemplate}</ul>`
+		return `<div style="width: 20%; float: left;">
+			<h3>List</h3>
+			<ul>${requestUnitsTemplate}</ul>
+		</div>`
 	},
 	events () {
 		return [
