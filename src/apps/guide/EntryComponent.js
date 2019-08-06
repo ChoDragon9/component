@@ -24,7 +24,7 @@ export const EntryComponent = component({
       <h2>Props: ${props}</h2>
       <button-component></button-component>
       <counter-component></counter-component>
-      <list-component props="list"></list-component>
+      <list-component bind-props="list"></list-component>
       <reactive-component></reactive-component>
     </div>`
   },

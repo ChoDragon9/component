@@ -36,7 +36,7 @@ export const RequestUnitFormComponent = component({
 						<td>Params</td>
 						<td>
 							<field 
-								props="params"
+								bind-props="params"
 								on="onChangeParams"></field>
 						</td>
 					</tr>
@@ -44,7 +44,7 @@ export const RequestUnitFormComponent = component({
 						<td>Headers</td>
 						<td>
 							<field 
-								props="headers"
+								bind-props="headers"
 								on="onChangeHeaders"></field>
 						</td>
 					</tr>

@@ -121,10 +121,14 @@ export const bindComponent = ({components, dom, state, methodResult}) => {
 
 // props는 자식에게 전달할 데이터
 const getProps = (elem, state) => {
-  const attr = getAttr(elem, 'props')
-  if (attr) {
-    return state[attr]
+  const bindProps = getAttr(elem, 'bind-props')
+	const props = getAttr(elem, 'props')
+  if (bindProps) {
+    return state[bindProps]
   } else {
+  	if (props) {
+  		return props
+	  }
     return {}
   }
 }

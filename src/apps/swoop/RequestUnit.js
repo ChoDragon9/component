@@ -17,10 +17,10 @@ export const RequestUnitComponent = component({
       <button type="button" class="add-unit">Unit 추가</button>
       <div>
 	      <list 
-	        props="requestUnits"
+	        bind-props="requestUnits"
 	        on="selectUnit"></list>
 	      <form 
-	        props="selectedRequestUnit"
+	        bind-props="selectedRequestUnit"
 	        on="onChangeUrl"></form>
         </div>
     </div>`

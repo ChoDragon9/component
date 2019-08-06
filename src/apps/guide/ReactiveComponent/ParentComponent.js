@@ -11,7 +11,7 @@ export const ParentComponent = component({
     return `<div>
       <h1>Parent</h1>
       <child-component 
-        props="message"
+        bind-props="message"
         on="onEmit"></child-component>
     </div>`
   },

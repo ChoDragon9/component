@@ -11,7 +11,7 @@ export const ReactiveComponent = component({
   },
   template () {
     return `<div>
-			<now props="now"></now>
+			<now bind-props="now"></now>
 			<now-controller on="changeNow"></now-controller>
 			<parent-component></parent-component>
 		</div>`
