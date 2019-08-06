@@ -5,7 +5,8 @@ import {clear, createNewKey} from "./Workflow/helper";
 
 export const WorkflowComponent = component({
   template () {
-    return `<div class="container">
+    return `<div>
+			<h2>Workflow</h2>
       <div class="panel">
         <button class="rect">사각형 추가</button>
         <button class="triangle">삼각형 추가</button>

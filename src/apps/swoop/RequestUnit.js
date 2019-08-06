@@ -12,17 +12,18 @@ export const RequestUnitComponent = component({
 		}
 	},
 	template () {
-		return `<div>
+		return `<div style="overflow: hidden">
       <h2>Request Unit</h2>
       <button type="button" class="add-unit">Unit 추가</button>
-      <div>
+      <div style="overflow: hidden">
 	      <list 
 	        bind-props="requestUnits"
 	        on="selectUnit"></list>
 	      <form 
 	        bind-props="selectedRequestUnit"
 	        on="onChangeUrl"></form>
-        </div>
+      </div>
+      <hr>
     </div>`
 	},
 	events () {
