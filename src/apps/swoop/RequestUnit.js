@@ -76,9 +76,4 @@ export const RequestUnitComponent = component({
 })
 
 // - Request Unit
-	// - 삭제 버튼
 	// - HTTP 요청 버튼
-	// - Method, URL 입력 폼
-	// - Params / Headers / Body 탭
-	// - Key-Value, Description
-	// - Body의 None / json / binary / text / xml 탭
