@@ -1,10 +1,13 @@
 import * as _ from './fp'
+import {createStore} from "./store";
+import {addEvent, getAttr, getElem} from "./helper";
 
 /**
  * @param options
 	{
 		 data = _.always({}),
 		 template = _.noop,
+		  template({data: state, props})
 		 components = _.always([]),
 		 methods = _.always([]),
 		 events = _.always([]),
@@ -12,44 +15,77 @@ import * as _ from './fp'
      created = _.noop
 	 }
  */
-export const component = (options) => (props = null) => {
+export const component = (options) => ({props, emit} = {}) => {
   const {
 	  data = _.always({}),
+	  template = _.noop,
+	  components = _.always([]),
+	  methods = _.always([]),
+	  events = _.always([]),
     beforeCreate = _.noop,
     created = _.noop
   } = options
-  const state = data()
+  const state = data({props})
+	const store = createStore(state)
+
   beforeCreate({props, data: state})
 
-  const render = create(options)
-  const dom = render(props)
+  const render = create({
+	  state,
+	  template,
+	  components,
+	  methods,
+	  events,
+	  store,
+  })
+  const dom = render({props, emit})
+	const renderFn = replaceWith({dom, render, props})
+
 	created({
 		dom,
 		props,
     data: state,
-		render: replaceWith({dom, render, props}),
+		render: renderFn,
 	})
+	reactive({store, state, renderFn})
   return dom
 }
 
 const create = ({
-    data = _.always({}),
-    template = _.noop,
-    components = _.always([]),
-    methods = _.always([]),
-    events = _.always([])
-  }) => props => {
-  const state = data()
+		state,
+		template,
+		components,
+		methods,
+		events,
+		store,
+  }) => ({props, emit}) => {
   const dom = parseDOM(template({data: state, props}))
-  bindEvent(events(), methods({dom, data: state, props}), dom)
-  bindComponent(components(), dom, state)
+	const methodResult = methods({dom, data: state, props, store, emit})
+
+  bindEvent(events(), methodResult, dom)
+  bindComponent({
+	  dom,
+	  state,
+	  components: components(),
+	  methodResult
+  })
   return dom
 }
 
-const replaceWith = ({dom, render, props}) => () => {
-  const newDom = render(props)
-  dom.replaceWith(newDom)
-  dom = newDom
+const replaceWith = (params) => () => {
+	// render는 create와 component 함수의 반환 함수, 즉 2가지다.
+	const {dom, render, props, on} = params
+  const newDom = render({props, emit: on})
+
+	dom.replaceWith(newDom)
+	Object.assign(params, {dom: newDom})
+}
+
+const reactive = ({store, state, renderFn}) => {
+	store.watchAll(({key, data}) => {
+		state[key] = data
+		renderFn()
+	})
 }
 
 export const parseDOM = (template) => {
@@ -70,37 +106,37 @@ export const bindEvent = (events, methods, dom) => {
   }
 }
 
-const addEvent = (methods, methodName) => event => {
-  methods[methodName].call(methods, event)
+export const bindComponent = ({components, dom, state, methodResult}) => {
+	for (const [selector, component] of components) {
+		getElem(selector, dom).forEach(elem => {
+			replaceWith({
+				dom: elem,
+				render: component,
+				props: getProps(elem, state),
+				on: getOn(elem, methodResult)
+			})()
+		})
+	}
 }
 
-export const bindComponent = (components, dom, state) => {
-  for (const [selector, component] of components) {
-    getElem(selector, dom).forEach(elem => {
-      replaceWith({
-        dom: elem,
-        render: component,
-        props: getProps(elem, state)
-      })()
-    })
-  }
-}
-
+// props는 자식에게 전달할 데이터
 const getProps = (elem, state) => {
-  const attr = getAttr(elem, 'props')
-  if (attr) {
-    if (state[attr]) {
-      return state[attr]
-    } else {
-      return attr
-    }
+  const bindProps = getAttr(elem, 'bind-props')
+	const props = getAttr(elem, 'props')
+  if (bindProps) {
+    return state[bindProps]
   } else {
+  	if (props) {
+  		return props
+	  }
     return {}
   }
 }
 
-export const getElem = (selector, parent = document) => {
-  return parent.querySelectorAll(selector)
+// on은 자식으로부터 전달받은 콜백
+const getOn = (elem, methodResult) => {
+	const attr = getAttr(elem, 'on')
+	if (attr && methodResult) {
+		return methodResult[attr]
+	}
 }
-
-const getAttr = (elem, attr) => elem.getAttribute(attr)

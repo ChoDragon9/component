@@ -1,1 +1,1 @@
-import index from './apps/sketchbook/index.js'
+import index from './apps/swoop/index.js'

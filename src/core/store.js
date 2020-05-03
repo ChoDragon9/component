@@ -1,3 +1,5 @@
+export const ALL = '*'
+
 export const createStore = (state = {}) => {
   const store = new Map()
   const subscriber = new Map()
@@ -9,7 +11,8 @@ export const createStore = (state = {}) => {
     set,
     delete: remove({store, subscriber}),
     get: getter({store}),
-    watch: watch({subscriber})
+    watch: watch({subscriber}),
+    watchAll: watchAll({subscriber}),
   }
 }
 
@@ -17,22 +20,32 @@ const setDefaultState = ({state, set}) => {
   Object.entries(state).forEach(([key, value]) => set(key, value))
 }
 
-const mutation = ({store, subscriber}) => (key, value) => {
+const mutation = ({store, subscriber}) => (key, value, noNotify = true) => {
   store.set(key, value)
-  nodify({subscriber, store, key})
+	noNotify && notify({subscriber, store, key})
 }
 
 const remove = ({store, subscriber}) => key => {
 	store.delete(key)
-	nodify({subscriber, store, key})
+	notify({subscriber, store, key})
 }
 
-const nodify = ({subscriber, key, store}) => {
+const notify = ({subscriber, key, store}) => {
+  const data = store.get(key)
   if (subscriber.has(key)) {
     for (const listener of subscriber.get(key)) {
-      listener(store.get(key))
+      listener(data)
     }
   }
+  broadCast({subscriber, key, data})
+}
+
+const broadCast = ({subscriber, key, data}) => {
+	if (subscriber.has(ALL)) {
+		for (const listener of subscriber.get(ALL)) {
+			listener({key, data})
+		}
+	}
 }
 
 const getter = ({store}) => key => store.get(key)
@@ -46,4 +59,11 @@ const watch = ({subscriber}) => (key, listener) => {
   }
   listeners.push(listener)
   subscriber.set(key, listeners)
+}
+
+const watchAll = ({subscriber}) => {
+  const watcher = watch({subscriber})
+  return listener => {
+    watcher(ALL, listener)
+  }
 }
