@@ -2,13 +2,13 @@ import {component} from '../../../core/component'
 import {store} from '../store/store'
 
 export const Line = component({
-  data () {
+  data() {
     return {
       strokeWidth: 5,
       stroke: 'rgba(255, 102, 51)'
     }
   },
-  template ({data, props}) {
+  template({data, props}) {
     const coordinate = store.get(props)
     let html = ''
     for (let i = 0, len = coordinate.length; i < len; i++) {
@@ -22,16 +22,16 @@ export const Line = component({
 
     return `<g>${html}</g>`
   },
-  events () {
+  events() {
     return [
       ['line', 'onclick', 'addPoint']
     ]
   },
-  methods ({props}) {
+  methods({props}) {
     return {
-      addPoint (event) {
+      addPoint(event) {
         event.preventDefault()
-	      event.stopPropagation()
+        event.stopPropagation()
 
         const {pageX, pageY, target} = event
         const index = parseInt(target.getAttribute('data-index'))
@@ -42,7 +42,7 @@ export const Line = component({
       }
     }
   },
-	created ({render, props}) {
+  created({render, props}) {
     store.watch(props, render)
   }
 })
