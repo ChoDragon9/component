@@ -22,7 +22,7 @@ export const Circle = component({
     return [
       ['circle', 'onmousedown', 'select'],
       ['circle', 'onmouseup', 'unselect'],
-      ['circle', 'onmouseleave', 'unselect']
+      // ['circle', 'onmouseleave', 'unselect']
     ]
   },
   methods({props}) {

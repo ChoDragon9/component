@@ -20,7 +20,7 @@ export const Polygon = component({
     return [
       ['polygon', 'onmousedown', 'select'],
       ['polygon', 'onmouseup', 'unselect'],
-      ['polygon', 'onmouseleave', 'unselect']
+      // ['polygon', 'onmouseleave', 'unselect']
     ]
   },
   methods ({props}) {
