@@ -4,29 +4,29 @@ import {NowControllerComponent} from "./ReactiveComponent/NowControllerComponent
 import {ParentComponent} from "./ReactiveComponent/ParentComponent";
 
 export const ReactiveComponent = component({
-  data () {
+  data() {
     return {
       now: Date.now()
     }
   },
-  template () {
+  template() {
     return `<div>
 			<now bind-props="now"></now>
 			<now-controller on="changeNow"></now-controller>
 			<parent-component></parent-component>
 		</div>`
   },
-	components () {
-  	return [
-  	  ['now', NowComponent],
-		  ['now-controller', NowControllerComponent],
-		  ['parent-component', ParentComponent],
-	  ]
-	},
-  methods ({store}) {
+  components() {
+    return [
+      ['now', NowComponent],
+      ['now-controller', NowControllerComponent],
+      ['parent-component', ParentComponent],
+    ]
+  },
+  methods({store}) {
     return {
-      changeNow (data, message) {
-      	console.log(message)
+      changeNow(data, message) {
+        console.log(message)
         store.set('now', data)
       },
     }

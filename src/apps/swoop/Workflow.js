@@ -4,7 +4,7 @@ import {createGeometry} from "./Workflow/store/mutation";
 import {clear, createNewKey} from "./Workflow/helper";
 
 export const WorkflowComponent = component({
-  template () {
+  template() {
     return `<div>
 			<h2>Workflow</h2>
       <div class="panel">
@@ -21,45 +21,45 @@ export const WorkflowComponent = component({
       <sketchbook></sketchbook>
     </div>`
   },
-	components () {
-		return [
-			['sketchbook', Sketchbook]
-		]
-	},
-  events () {
+  components() {
     return [
-	    ['button.rect', 'onclick', 'addRect'],
-	    ['button.triangle', 'onclick', 'addTriangle'],
-	    ['button.clear', 'onclick', 'clearAll']
+      ['sketchbook', Sketchbook]
     ]
   },
-  methods () {
+  events() {
+    return [
+      ['button.rect', 'onclick', 'addRect'],
+      ['button.triangle', 'onclick', 'addTriangle'],
+      ['button.clear', 'onclick', 'clearAll']
+    ]
+  },
+  methods() {
     return {
-	    addRect () {
-		    createGeometry(
-			    createNewKey(),
-			    [
-				    [100, 100],
-				    [100, 200],
-				    [200, 200],
-				    [200, 100]
-			    ]
-		    )
-	    },
-	    addTriangle () {
-		    createGeometry(
-			    createNewKey(),
-			    [
-				    [150, 100],
-				    [100, 200],
-				    [200, 200]
-			    ]
-		    )
-	    },
-	    clearAll () {
-		    clear()
-		    location.reload()
-	    }
+      addRect() {
+        createGeometry(
+          createNewKey(),
+          [
+            [100, 100],
+            [100, 200],
+            [200, 200],
+            [200, 100]
+          ]
+        )
+      },
+      addTriangle() {
+        createGeometry(
+          createNewKey(),
+          [
+            [150, 100],
+            [100, 200],
+            [200, 200]
+          ]
+        )
+      },
+      clearAll() {
+        clear()
+        location.reload()
+      }
     }
   }
 })

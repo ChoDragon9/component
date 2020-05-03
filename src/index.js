@@ -1,1 +1,1 @@
-import index from './apps/swoop/index.js'
+import './apps/swoop/index.js'

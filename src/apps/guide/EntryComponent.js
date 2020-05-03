@@ -5,18 +5,18 @@ import {CounterComponent} from "./CounterComponent";
 import {ReactiveComponent} from "./ReactiveComponent";
 
 export const EntryComponent = component({
-  data () {
+  data() {
     return {
       message: 'Hello World',
       btn: 'Click!',
-	    list: [
-	    	'Apple',
-		    'Orange',
-		    'Banana'
-	    ]
+      list: [
+        'Apple',
+        'Orange',
+        'Banana'
+      ]
     }
   },
-  template ({data, props}) {
+  template({data, props}) {
     const {message, btn} = data
     return `<div>
       <h1>${message}</h1>
@@ -28,33 +28,33 @@ export const EntryComponent = component({
       <reactive-component></reactive-component>
     </div>`
   },
-	components () {
-  	return [
-  		['list-component', ListComponent],
-		  ['button-component', ButtonComponent],
-		  ['counter-component', CounterComponent],
-	    ['reactive-component', ReactiveComponent]
-	  ]
-	},
-  events () {
+  components() {
+    return [
+      ['list-component', ListComponent],
+      ['button-component', ButtonComponent],
+      ['counter-component', CounterComponent],
+      ['reactive-component', ReactiveComponent]
+    ]
+  },
+  events() {
     return [
       ['button.my-btn', 'onclick', 'onClick'],
     ]
   },
-  methods () {
+  methods() {
     return {
       onClick() {
         this.alert()
       },
-      alert () {
-	      alert('Hello World')
+      alert() {
+        alert('Hello World')
       }
     }
   },
-	beforeCreate ({props, data}) {
-  	console.log('beforeCreate', {props, data})
-	},
-	created ({dom, render, props, data}) {
-		console.log('created', {dom, render, props, data})
-	}
+  beforeCreate({props, data}) {
+    console.log('beforeCreate', {props, data})
+  },
+  created({dom, render, props, data}) {
+    console.log('created', {dom, render, props, data})
+  }
 })

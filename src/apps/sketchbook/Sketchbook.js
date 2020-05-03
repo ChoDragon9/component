@@ -1,8 +1,8 @@
 import {store} from './store/store'
 import {component} from '../../core/component'
 import {
-	addPoint, calibrateCoordinate, changeCoordinate, clearCustom, createGeometry, removeCoordinate,
-	selectPoint
+  addPoint, calibrateCoordinate, changeCoordinate, clearCustom, createGeometry, removeCoordinate,
+  selectPoint
 } from './store/mutation'
 import {Line} from './components/Line'
 import {Circle} from './components/Circle'
@@ -10,7 +10,7 @@ import {Polygon} from './components/Polygon'
 import {createNewKey} from "./helper";
 
 export const Sketchbook = component({
-  template () {
+  template() {
     const coordinates = store.get('coordinates')
     const html = coordinates.map(key => {
       return `<polygon props="${key}"></polygon>
@@ -27,64 +27,64 @@ export const Sketchbook = component({
       </div>
     `
   },
-  components () {
+  components() {
     return [
       ['line', Line],
       ['circle', Circle],
       ['polygon', Polygon]
     ]
   },
-  events () {
+  events() {
     return [
       ['svg', 'onmousemove', 'onMouseMove'],
       ['svg', 'onclick', 'onClick'],
-	    ['document', 'onkeyup', 'onKeyUp'],
+      ['document', 'onkeyup', 'onKeyUp'],
     ]
   },
-  methods ({dom}) {
+  methods() {
     return {
-      onMouseMove (event) {
+      onMouseMove(event) {
         const {pageX, pageY} = event
-        changeCoordinate ({pageX, pageY})
+        changeCoordinate({pageX, pageY})
       },
-	    onClick (event) {
-		    const {pageX, pageY} = event
+      onClick(event) {
+        const {pageX, pageY} = event
         const {x, y} = calibrateCoordinate({pageX, pageY})
         const currentPoint = store.get('currentPoint')
         const currentPolygon = store.get('currentPolygon') || createNewKey()
 
-		    if (currentPoint === 0) {
-			    store.set('currentPolygon', currentPolygon)
-			    createGeometry(currentPolygon, [[x, y], [x, y]])
-		    }
-		    if (currentPoint >= 0 && currentPoint <= 2) {
-			    selectPoint({coordinateKey: currentPolygon, pointIndex: currentPoint + 1})
-			    store.set('currentPoint', currentPoint + 1)
-		    }
-		    if (currentPoint >= 1 && currentPoint <= 3) {
-			    addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
-		    }
-		    if (currentPoint === 3) {
-			    clearCustom()
-		    }
+        if (currentPoint === 0) {
+          store.set('currentPolygon', currentPolygon)
+          createGeometry(currentPolygon, [[x, y], [x, y]])
+        }
+        if (currentPoint >= 0 && currentPoint <= 2) {
+          selectPoint({coordinateKey: currentPolygon, pointIndex: currentPoint + 1})
+          store.set('currentPoint', currentPoint + 1)
+        }
+        if (currentPoint >= 1 && currentPoint <= 3) {
+          addPoint({coordinateKey: currentPolygon, coordinate: [x, y]})
+        }
+        if (currentPoint === 3) {
+          clearCustom()
+        }
       },
-	    onKeyUp (event) {
-      	const {keyCode} = event
-		    if (keyCode !== 27) {
-      		return
-		    }
-		    const currentPolygon = store.get('currentPolygon')
-		    if (currentPolygon) {
-			    removeCoordinate(currentPolygon)
-			    clearCustom()
-		    }
-	    }
+      onKeyUp(event) {
+        const {keyCode} = event
+        if (keyCode !== 27) {
+          return
+        }
+        const currentPolygon = store.get('currentPolygon')
+        if (currentPolygon) {
+          removeCoordinate(currentPolygon)
+          clearCustom()
+        }
+      }
     }
   },
-	created ({dom, render}) {
-  	setTimeout(() => {
-			store.set('svgOffset', dom.getBoundingClientRect())
-	  })
+  created({dom, render}) {
+    setTimeout(() => {
+      store.set('svgOffset', dom.getBoundingClientRect())
+    })
     store.watch('coordinates', render)
-	}
+  }
 })

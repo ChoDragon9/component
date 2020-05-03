@@ -3,13 +3,13 @@ import {store} from '../store/store'
 import {component} from "../../../../core/component";
 
 export const Circle = component({
-  data () {
+  data() {
     return {
       radius: 10,
       fill: 'rgba(255, 102, 51)'
     }
   },
-  template ({data: {radius, fill}, props}) {
+  template({data: {radius, fill}, props}) {
     const coordinate = store.get(props)
     const html = coordinate.reduce((html, [x, y], index) => {
       html += `<circle cx="${x}" cy="${y}" r="${radius}" fill="${fill}" data-index="${index}"></circle>`
@@ -18,23 +18,23 @@ export const Circle = component({
 
     return `<g>${html}</g>`
   },
-  events () {
+  events() {
     return [
       ['circle', 'onmousedown', 'select'],
       ['circle', 'onmouseup', 'unselect'],
       ['circle', 'onmouseleave', 'unselect']
     ]
   },
-  methods ({props}) {
+  methods({props}) {
     const getIndex = elem => parseInt(elem.getAttribute('data-index'))
     return {
-      select (event) {
+      select(event) {
         selectPoint({
-	        coordinateKey: props,
+          coordinateKey: props,
           pointIndex: getIndex(event.target)
         })
       },
-      unselect () {
+      unselect() {
         if (hasActiveGeometry()) {
           return
         }
@@ -42,7 +42,7 @@ export const Circle = component({
       }
     }
   },
-	created ({render, props}) {
+  created({render, props}) {
     store.watch(props, render)
   }
 })
