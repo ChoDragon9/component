@@ -6,7 +6,7 @@ const store = createStore({
 })
 
 export const CounterComponent = component({
-	template () {
+	template() {
 		const count = store.get('count')
 		return `<div>
 			<button class="up">Up</button>
@@ -14,32 +14,32 @@ export const CounterComponent = component({
 			<button class="down">Down</button>
 		</div>`
 	},
-	events () {
+	events() {
 		return [
 			['.up', 'onclick', 'upCount'],
 			['.down', 'onclick', 'downCount'],
 		]
 	},
-	methods () {
+	methods() {
 		return {
-			upCount () {
+			upCount() {
 				this.calcCount(1)
 			},
-			downCount () {
+			downCount() {
 				this.calcCount(-1)
 			},
-			calcCount (num) {
+			calcCount(num) {
 				this.setCount(this.getCount() + num)
 			},
-			getCount () {
+			getCount() {
 				return store.get('count')
 			},
-			setCount (count) {
+			setCount(count) {
 				store.set('count', count)
 			}
 		}
 	},
-	created ({render}) {
+	created({render}) {
 		store.watch('count', render)
 	}
 })

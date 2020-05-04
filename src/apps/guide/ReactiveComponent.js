@@ -11,10 +11,10 @@ export const ReactiveComponent = component({
   },
   template() {
     return `<div>
-			<now bind-props="now"></now>
-			<now-controller on="changeNow"></now-controller>
-			<parent-component></parent-component>
-		</div>`
+      <now bind-props="now"></now>
+      <now-controller on="changeNow"></now-controller>
+      <parent-component></parent-component>
+    </div>`
   },
   components() {
     return [
